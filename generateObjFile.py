@@ -13,53 +13,66 @@ def create_lamp():
     side_length = int(input("Enter the width of the lamp (side length): "))
     height_pole = int(input("Enter the height of the lamp: "))
     height_base = int(input("Enter the height of the base: "))
+    diameter_pole = int(input("Enter the diameter of the pole: "))
 
-    # BASE OF THE LAMP: Generate the vertices for the base of the base of the 
-    base_vertices = [
+    # BASE OF THE LAMP
+    # Generating vertices for the base and top of the lamp base
+    base_vertices_lamp_base = [
         (-side_length/2, -side_length/2, 0),
         (side_length/2, -side_length/2, 0),
         (-side_length/2, side_length/2, 0),
         (side_length/2, side_length/2, 0)
     ]
-    
-    # BASE OF THE LAMP: Generate the vertices for the top
-    top_vertices = [
+    top_vertices_lamp_base = [
         (-side_length/2, -side_length/2, height_base),
         (side_length/2, -side_length/2, height_base),
         (-side_length/2, side_length/2, height_base),
         (side_length/2, side_length/2, height_base)
     ]
+    vertices_lamp_base = base_vertices_lamp_base + top_vertices_lamp_base
 
-    # BASE OF THE LAMP: Combine the vertices
-    vertices = base_vertices + top_vertices
-
-    # BASE OF THE LAMP: Generate the faces for the base
-    base_faces = [
-        (0, 1, 3),
-        (0, 3, 2),
-        (0, 1, 5),
-        (0, 5, 4),
-        (1, 3, 7),
-        (1, 7, 5),
-        (2, 3, 7),
-        (2, 7, 6),
-        (0, 2, 6),
-        (0, 6, 4),
-        (4, 5, 7),
-        (4, 7, 6)
+    # Generating faces for the lamp base
+    base_faces_lamp_base = [
+        (0, 1, 3, 2),   
+        (4, 6, 7, 5),   
+        (0, 4, 5, 1),   
+        (1, 5, 7, 3),
+        (3, 7, 6, 2),
+        (2, 6, 4, 0)
     ]
 
-    # BASE OF THE LAMP: Generate the faces for the top
-    top_faces = [
-        (8, 9, 11),
-        (8, 11, 10)
+    # POLE OF THE LAMP
+    # Calculate half the diameter for centering the pole
+    half_diameter = diameter_pole / 2
+
+    
+    base_vertices_lamp_pole = [
+        (-half_diameter, -half_diameter, height_base),
+        (half_diameter, -half_diameter, height_base),
+        (-half_diameter, half_diameter, height_base),
+        (half_diameter, half_diameter, height_base)
+    ]
+    top_vertices_lamp_pole = [
+        (-half_diameter, -half_diameter, height_base + height_pole),
+        (half_diameter, -half_diameter, height_base + height_pole),
+        (-half_diameter, half_diameter, height_base + height_pole),
+        (half_diameter, half_diameter, height_base + height_pole)
+    ]
+    vertices_lamp_pole = base_vertices_lamp_pole + top_vertices_lamp_pole
+
+    # Generating faces for the lamp pole
+    base_faces_lamp_pole = [
+        (8, 9, 11, 10),   
+        (12, 14, 15, 13),   
+        (8, 12, 13, 9),   
+        (9, 13, 15, 11),
+        (11, 15, 14, 10),
+        (10, 14, 12, 8)
     ]
 
-    # BASE OF THE LAMP: Combine the faces
-    faces = base_faces + top_faces
+    vertices = vertices_lamp_base + vertices_lamp_pole
+    faces = base_faces_lamp_base + base_faces_lamp_pole
 
     # Write to OBJ file
     write_obj_file(vertices, faces, "lamp.obj")
-
-# Call the function to create the lamp and write it to an OBJ file
 create_lamp()
