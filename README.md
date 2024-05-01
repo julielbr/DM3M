@@ -1,5 +1,5 @@
 # DM3M
-Project done in the subject- Diseño y Gestión de Sistemas de Información Genómicos, Spring 2024
+Project done in the subject- 3D DESIGN AND MODELINGs, Spring 2024
 
 
 
